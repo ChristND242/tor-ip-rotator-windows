@@ -3,6 +3,9 @@
 
 **Porting a Linux/Termux Tor IP rotation workflow into a Windows-native research tool**
 
+<img width="1689" height="948" alt="image" src="https://github.com/user-attachments/assets/56de5bcc-8fbc-488a-a088-b696d25c899a" />
+
+
 ---
 
 ## ⚠️ Disclaimer
@@ -14,7 +17,7 @@ This project is intended **strictly for research, testing, and educational purpo
 - Only applications explicitly configured to use the proxy will route through Tor
 - You are fully responsible for how you use this tool
 
----
+
 
 ## Overview
 
@@ -39,7 +42,7 @@ The goal is to reproduce a Linux-based Tor IP rotation workflow **without WSL, D
 ✘ This does not bypass Tor exit blocking  
 ✘ This does not guarantee anonymity  
 
----
+
 
 ## Architecture
 
@@ -61,7 +64,7 @@ Tor   Tor   Tor   Tor   Tor
 
 Each Tor instance is fully isolated with its own data directory and control channel.
 
----
+
 
 ## Core Components
 
@@ -101,7 +104,7 @@ Each Tor instance is fully isolated with its own data directory and control chan
   - Configuration generation
   - Rotation scheduling
 
----
+
 
 ## System Requirements
 
@@ -113,7 +116,7 @@ Each Tor instance is fully isolated with its own data directory and control chan
 | Network | Outbound TCP allowed |
 | Disk Space | ~200 MB |
 
----
+
 
 ## Dependencies (Auto-Installed)
 
@@ -126,7 +129,7 @@ The script automatically installs and manages:
 
 No manual installation is required.
 
----
+
 
 ## Execution Flow
 
@@ -145,7 +148,7 @@ No manual installation is required.
     - Fetches current IP via proxy
     - Sleeps and repeats
 
----
+
 
 ## Runtime Directory Layout
 
@@ -165,7 +168,7 @@ No manual installation is required.
 
 These directories are deleted and regenerated on each run.
 
----
+
 
 ## Network Ports Used
 
@@ -177,7 +180,7 @@ These directories are deleted and regenerated on each run.
 
 Ensure these ports are free before execution.
 
----
+
 
 ## How to Run
 
@@ -191,7 +194,7 @@ cd tor-ip-rotator-windows
 ### Run the Script
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "path"
+powershell -ExecutionPolicy Bypass -File .\IPHopper.ps1
 ```
 
 You will be prompted to enter an IP rotation interval (minimum 5 seconds).
@@ -226,7 +229,12 @@ This enables the proxy **for the entire Windows operating system**, meaning **an
 
 Once enabled, Windows will route supported traffic through Tor automatically.
 
+--- 
+❗**Alternatively, you may enable the “Automatically detect settings” option directly**
+
 ---
+
+
 
 ## Important Notes About System-Wide Proxying
 
@@ -246,7 +254,7 @@ Once enabled, Windows will route supported traffic through Tor automatically.
   - Kernel-level traffic is untouched
   - Only proxy-aware applications are routed
 
----
+
 
 ## Disable System Proxy (Strongly Recommended After Use)
 
@@ -261,7 +269,7 @@ To disable:
 2. Turn **Use a proxy server** OFF
 3. Save
 
----
+
 
 ## When to Use Each Mode
 
@@ -280,7 +288,7 @@ https://api64.ipify.org
 
 The displayed IP should match the script output.
 
----
+
 
 ## Expected Output
 
@@ -294,7 +302,7 @@ Enter IP rotation interval in seconds (min 5): 15
 
 IP reuse may occur due to Tor exit node policies.
 
----
+
 
 ## Known Issues & Limitations
 
@@ -328,7 +336,7 @@ This is expected behavior.
 
 * Firewalls may block Tor or ControlPorts
 
----
+
 
 ## Common Errors
 
@@ -359,7 +367,8 @@ choco list --local-only
 
 **Fix:** Run PowerShell as Administrator.
 
----
+<img width="980" height="377" alt="image" src="https://github.com/user-attachments/assets/c677b654-d783-424a-84a4-23f6b23229bf" />
+
 
 ## Customization
 
@@ -381,7 +390,7 @@ choco list --local-only
 * Web application testing under Tor
 * Teaching network anonymization concepts
 
----
+
 
 ## Final Notes
 
@@ -393,7 +402,7 @@ This project prioritizes:
 
 If you understand this system, you understand **Tor automation on Windows**.
 
----
+
 
 ## License
 
