@@ -191,7 +191,7 @@ cd tor-ip-rotator-windows
 ### Run the Script
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\IPHopper.ps1
+powershell -ExecutionPolicy Bypass -File "path"
 ```
 
 You will be prompted to enter an IP rotation interval (minimum 5 seconds).
