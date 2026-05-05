@@ -17,7 +17,7 @@ Write-Host "|   ||     ___/|       _//  _ \   __\__  \\   __\  |/  _ \ /    \ " 
 Write-Host "|   ||    |    |    |   (  <_> )  |  / __ \|  | |  (  <_> )   |  \ " -ForegroundColor Cyan
 Write-Host "|___||____|    |____|_  /\____/|__| (____  /__| |__|\____/|___|  / " -ForegroundColor DarkCyan
 Write-Host "                      \/                 \/                    \/  " -ForegroundColor Cyan
-Write-Host "               By.ND" -ForegroundColor Blue
+Write-Host "               By.CND" -ForegroundColor Blue
 Write-Host ""
 Write-Host "[+] Starting Windows IPRotation setup..." -ForegroundColor Green
 Write-Host ""
@@ -65,7 +65,7 @@ Ensure-Choco
 # ----------------------------------------------------------
 # 3. Install or update required packages
 #    - tor: headless Tor
-#    - privoxy: HTTP proxy that forwards to our Tor SOCKS
+#    - privoxy: HTTP proxy that forwards to Tor SOCKS
 #    - nmap: to get ncat.exe
 # ----------------------------------------------------------
 $packagesToEnsure = @("tor", "privoxy", "nmap")
@@ -152,7 +152,7 @@ $privoxyPort  = 8118
 
 # ----------------------------------------------------------
 # 6.1 Graceful shutdown handler (cleanup on exit)
-# When the PowerShell session exits (Ctrl+C, window close, error, etc.),
+# When PowerShell session exits (Ctrl+C, window close, error, etc.),
 # kill Tor and Privoxy so ports are released and reruns work cleanly.
 # ----------------------------------------------------------
 
@@ -226,7 +226,7 @@ Start-Process -FilePath $privoxyExe -ArgumentList "`"$privoxyCfg`"" -WindowStyle
 Start-Sleep -Seconds 2
 
 # ----------------------------------------------------------
-# 10. Ask user how often to rotate IP
+# 10. Input how often to rotate IP
 # ----------------------------------------------------------
 $rotationTime = Read-Host "Enter IP rotation interval in seconds (min 5)"
 if (-not ($rotationTime -as [int]) -or [int]$rotationTime -lt 5) {
