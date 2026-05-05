@@ -1,12 +1,18 @@
 
 # Multi-Tor Rotating Proxy for Windows (PowerShell)
 
+![Windows](https://img.shields.io/badge/Windows-10%2F11-blue)
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-informational)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Tor](https://img.shields.io/badge/Tor-Multi--Instance-lightgrey)
+![Status](https://img.shields.io/badge/Status-Stable-brightgreen)
+
 **Porting a Linux/Termux Tor IP rotation workflow into a Windows-native research tool**
 
 <img width="1689" height="948" alt="image" src="https://github.com/user-attachments/assets/56de5bcc-8fbc-488a-a088-b696d25c899a" />
 
 
----
+
 
 ## ⚠️ Disclaimer
 
@@ -46,20 +52,23 @@ The goal is to reproduce a Linux-based Tor IP rotation workflow **without WSL, D
 
 ## Architecture
 
-```
+```mermaid id="p7x214"
+graph TD
+    A[Browser / Application] --> B[Privoxy :8118]
 
-[ Browser / Application ]
-|
-v
-[ Privoxy :8118 ]
-|
-v
-[ Tor SOCKS Instances ]
-|     |     |     |
-9050  9060  9070  9080  9090
-|     |     |     |
-Tor   Tor   Tor   Tor   Tor
+    subgraph Tor SOCKS Instances
+        C1[:9050]
+        C2[:9060]
+        C3[:9070]
+        C4[:9080]
+        C5[:9090]
+    end
 
+    B --> C1
+    B --> C2
+    B --> C3
+    B --> C4
+    B --> C5
 ```
 
 Each Tor instance is fully isolated with its own data directory and control channel.
@@ -76,7 +85,7 @@ Each Tor instance is fully isolated with its own data directory and control chan
   - Control Port (circuit management)
 - Circuit rotation is triggered via `SIGNAL NEWNYM`
 
----
+
 
 ### Privoxy
 
@@ -84,7 +93,7 @@ Each Tor instance is fully isolated with its own data directory and control chan
 - Allows browsers and tools to use Tor without native SOCKS support
 - Acts as a forwarding layer across multiple Tor instances
 
----
+
 
 ### ncat (Nmap)
 
@@ -92,7 +101,7 @@ Each Tor instance is fully isolated with its own data directory and control chan
 - Used to send raw commands to Tor ControlPorts
 - Enables scripted circuit rotation
 
----
+
 
 ### PowerShell
 
@@ -152,19 +161,25 @@ No manual installation is required.
 
 ## Runtime Directory Layout
 
+```mermaid
+graph TD
+    A[%USERPROFILE%] --> B[.tor_multi]
+    A --> C[.privoxy]
+    C --> D[config]
+
+    B --> E[tor0]
+    B --> F[tor1]
+    B --> G[tor2]
+    B --> H[tor3]
+    B --> I[tor4]
+
+    %% Annotation
+    classDef note fill:#f9f,stroke:#333,stroke-dasharray: 5 5;
+    J[Deleted & regenerated on each run]:::note
+
+    A -.-> J
 ```
 
-%USERPROFILE%
-├── .tor_multi
-│   ├── tor0
-│   ├── tor1
-│   ├── tor2
-│   ├── tor3
-│   └── tor4
-└── .privoxy
-└── config
-
-````
 
 These directories are deleted and regenerated on each run.
 
@@ -199,7 +214,7 @@ powershell -ExecutionPolicy Bypass -File "path_to_file"
 
 You will be prompted to enter an IP rotation interval (minimum 5 seconds).
 
----
+
 
 ## Option 1: Browser Configuration
 
@@ -210,7 +225,7 @@ Address: 127.0.0.1
 Port:    8118
 ```
 
----
+
 
 ## Option 2: System-Wide Proxy (Computer-Level)
 
@@ -229,10 +244,10 @@ This enables the proxy **for the entire Windows operating system**, meaning **an
 
 Once enabled, Windows will route supported traffic through Tor automatically.
 
---- 
+ 
 ❗**Alternatively, you may enable the “Automatically detect settings” option directly**
 
----
+
 
 
 
@@ -278,7 +293,7 @@ To disable:
 | Browser-only | Testing, OSINT, research, safest |
 | System-wide | Lab environments, controlled testing |
 
----
+
 
 Verify routing by visiting:
 
@@ -313,7 +328,7 @@ IP reuse may occur due to Tor exit node policies.
 
 **Mitigation:** Increase rotation interval or instance count.
 
----
+
 
 ### Tor Exit Blocking
 
@@ -322,7 +337,7 @@ IP reuse may occur due to Tor exit node policies.
 
 This is expected behavior.
 
----
+
 
 ### Antivirus Warnings
 
@@ -330,7 +345,7 @@ This is expected behavior.
 
 **Mitigation:** Whitelist if policy allows.
 
----
+
 
 ### Corporate or Restricted Networks
 
@@ -351,7 +366,7 @@ This is expected behavior.
 choco list --local-only
 ```
 
----
+
 
 ### `Address already in use`
 
@@ -359,7 +374,7 @@ choco list --local-only
 
 **Fix:** Stop conflicting services or reboot.
 
----
+
 
 ### `Access denied`
 
@@ -380,7 +395,7 @@ choco list --local-only
 | Binary paths         | `Find-Exe` fallback paths      |
 | Disable auto-install | Remove Chocolatey section      |
 
----
+
 
 ## Intended Use Cases
 
