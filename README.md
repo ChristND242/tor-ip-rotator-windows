@@ -202,7 +202,7 @@ Ensure these ports are free before execution.
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/tor-ip-rotator-windows.git
+git clone https://github.com/ChristND242/tor-ip-rotator-windows.git
 cd tor-ip-rotator-windows
 ````
 
